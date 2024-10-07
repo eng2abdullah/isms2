@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>isms assistant</title>
+</head>
+<body>
+    <input type="text" id="userInput" placeholder="Ask the isms assistant">
+    <button onclick="askGPT()">Ask</button>
+    <div id="response"></div>
+
+    <script>
+    async function askGPT() {
+        const apiKey = 'sk-nXIg9k5jZDCbad-1A9VHhD3NitTfTeisMr6hmhy428T3BlbkFJQGAL3HJAFmhxPMNTkuciQRuocIYA1vqj4Pil8T8dwA'; // Replace with your OpenAI API key
+
+        const userInput = document.getElementById('userInput').value;
+        const response = await fetch('https://api.openai.com/v1/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo',  // You can replace this with your specific model
+                prompt: userInput,
+                max_tokens: 150
+            })
+        });
+
+        const data = await response.json();
+        document.getElementById('response').innerText = data.choices[0].text;
+    }
+    </script>
+</body>
+</html>
